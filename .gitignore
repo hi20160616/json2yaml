@@ -15,4 +15,4 @@
 # vendor/
 
 test/
-header.json
+dist/
