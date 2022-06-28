@@ -4,36 +4,41 @@ import (
 	"flag"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/ghodss/yaml"
 )
 
-var fFlag = flag.String("f", "foo.json", "The json file u need convert to yaml.")
-var outFlag = flag.String("o", "bar.yml", "Where to save converted yaml file?")
+var in = flag.String("f", "target.json", "The json file u need convert to yaml.")
+var out = flag.String("o", "result.yml", "Where to save converted yaml file?")
+
+func j2y(j, y string) error {
+	jf, err := os.ReadFile(j)
+	if err != nil {
+		return err
+	}
+	// j := []byte(`{"name": "John", "age": 30}`)
+	yf, err := yaml.JSONToYAML(jf)
+	if err != nil {
+		return err
+	}
+	out, err := os.OpenFile(y, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		return err
+	}
+	out.Write(yf)
+	return nil
+}
 
 func main() {
 	flag.Parse()
-	j, err := os.ReadFile(*fFlag)
-	if err != nil {
-		log.Fatalf("Open json file error: %v", err)
+	if *out == "result.yml" {
+		*out = strings.TrimSuffix(*in, ".json") + ".yml"
 	}
-	// j := []byte(`{"name": "John", "age": 30}`)
-	y, err := yaml.JSONToYAML(j)
-	if err != nil {
-		log.Fatalf("JSONToYAML error: %v", err)
-		return
+	if err := j2y("header.json", *out); err != nil {
+		log.Fatalln(err)
 	}
-	if *outFlag == "" {
-		*outFlag = *fFlag + ".yml"
+	if err := j2y(*in, *out); err != nil {
+		log.Fatalln(err)
 	}
-	out, err := os.OpenFile(*outFlag, os.O_CREATE, 0644)
-	if err != nil {
-		log.Fatalf("Save yaml error: %v", err)
-	}
-	out.Write(y)
-	// fmt.Println(string(y))
-	/* Output:
-	name: John
-	age: 30
-	*/
 }
