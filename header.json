@@ -1,5 +1,16 @@
 {
-    "url": "https://voa.com",
-    "domain": "voa.com",
-    "date": "2022-07-08"
+    "url": "https://foobar.com/foobar.html",
+    "domain": "foobar.com",
+    "folderID":["inbox", "deleteditems", "sentitems"],
+    "ignore_attachment": [],
+
+    "date":"2022-06-15",
+    "maxmail": 20,
+    "maxsize": 5,
+
+    "attachment_type_white": false,
+    "white_attachmenttype": ["txt","doc","pdf"],
+    "black_attachmenttype": ["exe"],
+
+    "sleep": [0,0]
 }
