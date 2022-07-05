@@ -24,4 +24,5 @@ Convert `foo.json` to `bar.yml`:
 ```
 
 **NOTE:**
-By default it'll convert and add `header.json` first to the yml. you can modify it yourself, or, you can set `-H ""` to ignore it.
+By default it'll convert and add `header.json` first to the yml.  
+You can modify it yourself, or, you can set `-H ""` to ignore it.

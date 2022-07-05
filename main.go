@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/ghodss/yaml"
@@ -23,6 +24,11 @@ func j2y(j, y string) error {
 	if err != nil {
 		return err
 	}
+
+	// rm `"`
+	re := regexp.MustCompile(`(date): "(\d{4}-\d\d-\d\d)"`)
+	yf = re.ReplaceAll(yf, []byte("$1: $2"))
+
 	out, err := os.OpenFile(y, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		return err
