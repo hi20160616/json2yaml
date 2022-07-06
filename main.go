@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/ghodss/yaml"
+	"sigs.k8s.io/yaml"
 )
 
 var in = flag.String("f", "target.json", "The json file u need convert to yaml.")
